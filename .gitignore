@@ -60,3 +60,6 @@ reports/human-session-*.json
 
 # subagent-driven-development scratch workspace (ledgers, briefs, review packages)
 .superpowers/
+
+# Rust/Cargo build artifacts (native bindings)
+native/yrs-src/target/
