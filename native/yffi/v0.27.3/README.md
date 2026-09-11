@@ -1,15 +1,25 @@
-# Test-only yffi v0.27.3 Windows asset
+# yrs.dll: built from vendored y-crdt source
 
-This directory contains the exact Windows x64 native asset used by the
-standalone `yjs_probe` experiment. It is not part of Promeo's production
-runtime and must not be copied into `promeo_trunk`.
+This directory holds `yrs.dll` (the C ABI binary Dart FFI loads) and
+`libyrs.h` (its header, used only as documentation for the Dart bindings
+in `lib/runtime/yrs/yrs_ffi_bindings.dart` -- Dart FFI does not parse C
+headers itself).
 
-- Source release: https://github.com/y-crdt/y-crdt/releases/tag/v0.27.3
-- Archive: `yffi-v0.27.3-x86_64-windows.zip`
-- Extracted files: `yrs.dll`, `libyrs.h`
-- SHA-256 (`yrs.dll`): `9AE2DC9CF393363F9367F7453852917B434A428AD39620E06A4E9C996FB9CAC9`
-- License: the bundled header carries the y-crdt MIT license notice; this
-  probe uses the binary only for local measurement.
+`yrs.dll` is **no longer a downloaded prebuilt binary**. It is built
+locally, offline, from the vendored y-crdt source under
+`native/yrs-src/` -- run `tool/build_yrs_native.ps1` from the repo root to
+reproduce it. See `native/yrs-src/PROVENANCE.md` for exactly what was
+vendored, from where, and the one intentional deviation from upstream.
 
-The archive is a one-version test dependency. It is intentionally pinned so
-the P3 report can identify the exact Yrs ABI and native runtime measured.
+- Source: `native/yrs-src/` (y-crdt v0.27.3, commit
+  `ac476a47ecc68be26e8c5b48a4be035773636d3a`)
+- Built with: `cargo build -p yffi --release --target
+  x86_64-pc-windows-msvc --offline`
+- SHA-256 (`yrs.dll`, this build): `B3FAE3C9696283B42306C633CAB12F06FFE827462E92C2ED31614C394089C2DD`
+- License: the bundled header carries the y-crdt MIT license notice; see
+  `native/yrs-src/LICENSE` for the full text.
+
+`libyrs.h` was diffed line-for-line against the upstream `v0.27.3` header
+(`tests-ffi/include/libyrs.h` in the vendored source) and found identical
+-- it was not regenerated, and the existing Dart FFI bindings did not need
+any change.
