@@ -40,8 +40,13 @@ ever builds `cargo build -p yffi --release` — it never runs `cargo
 test`/`cargo bench` against this vendored `yrs`/`yffi` source — so those
 dev-only dependencies exist only to bloat the offline `cargo vendor`
 cache. Measured effect: `vendor/` shrank from ~220MB/131 crates to
-~21MB/45 crates. This is the only line-for-line change from upstream;
-`yffi/` is completely unmodified.
+~21MB/45 crates. Alongside that, `[lib] bench` was also flipped from
+upstream's `true` to `false`, to keep the manifest internally consistent
+now that the `[[bench]]` targets themselves are commented out. This has
+zero effect on `cargo build -p yffi --release` — that field is only read
+by `cargo bench`/doctest-bench invocations, which this vendored copy is
+never used for. Other than those two changes, this is the only
+line-for-line deviation from upstream; `yffi/` is completely unmodified.
 
 ## Rust toolchain
 
