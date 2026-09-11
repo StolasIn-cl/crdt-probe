@@ -57,3 +57,6 @@ js/node_modules/
 # session dumps into the same directory untracked would train everyone to
 # ignore a dirty reports/, which is exactly the signal that must stay clean.
 reports/human-session-*.json
+
+# subagent-driven-development scratch workspace (ledgers, briefs, review packages)
+.superpowers/
