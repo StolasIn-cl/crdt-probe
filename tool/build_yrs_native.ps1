@@ -1,8 +1,10 @@
 # tool/build_yrs_native.ps1
 #
 # Builds yrs.dll from the vendored y-crdt source under native/yrs-src/ and
-# copies it over native/yffi/v0.27.3/yrs.dll. Fully offline (--offline) --
-# run tool/build_yrs_native.ps1 only when you've changed something under
+# copies it over native/yffi/v0.27.3/yrs.dll. Fully offline once rustup
+# already has the pinned toolchain (see rust-toolchain.toml) -- cargo
+# itself never touches the network (--offline + vendor/). Run
+# tool/build_yrs_native.ps1 only when you've changed something under
 # native/yrs-src/ and want a fresh yrs.dll; ordinary `flutter test`/
 # `flutter build windows` never invoke this automatically.
 $ErrorActionPreference = "Stop"

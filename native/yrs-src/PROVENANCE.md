@@ -31,7 +31,7 @@ and `name = "yrs"` — so `cargo build -p yffi --release` produces
 `dart:ffi`'s `DynamicLibrary.open`, the same way the previously-vendored
 prebuilt binary was consumed — no Dart-side change needed.
 
-## The one intentional deviation from upstream: `yrs/Cargo.toml`
+## The intentional deviation from upstream: `yrs/Cargo.toml`
 
 `yrs/Cargo.toml`'s `[dev-dependencies]` (criterion, flate2, ropey,
 proptest, proptest-derive, rand, assert_matches2, uuid) and both
@@ -40,13 +40,17 @@ ever builds `cargo build -p yffi --release` — it never runs `cargo
 test`/`cargo bench` against this vendored `yrs`/`yffi` source — so those
 dev-only dependencies exist only to bloat the offline `cargo vendor`
 cache. Measured effect: `vendor/` shrank from ~220MB/131 crates to
-~21MB/45 crates. Alongside that, `[lib] bench` was also flipped from
+~21MB/44 crates. Alongside that, `[lib] bench` was also flipped from
 upstream's `true` to `false`, to keep the manifest internally consistent
 now that the `[[bench]]` targets themselves are commented out. This has
 zero effect on `cargo build -p yffi --release` — that field is only read
 by `cargo bench`/doctest-bench invocations, which this vendored copy is
 never used for. Other than those two changes, this is the only
 line-for-line deviation from upstream; `yffi/` is completely unmodified.
+Note: because of this, `yrs/benches/*.rs` cannot actually be built from
+this vendored copy — uncommenting the `[[bench]]` block will not work
+without also re-vendoring the dev-dependencies above and copying
+`assets/` (bench input data) back in.
 
 ## Rust toolchain
 

@@ -20,6 +20,8 @@ vendored, from where, and the one intentional deviation from upstream.
   `native/yrs-src/LICENSE` for the full text.
 
 `libyrs.h` was diffed line-for-line against the upstream `v0.27.3` header
-(`tests-ffi/include/libyrs.h` in the vendored source) and found identical
--- it was not regenerated, and the existing Dart FFI bindings did not need
-any change.
+(`tests-ffi/include/libyrs.h`, which is **not** vendored here -- see
+`PROVENANCE.md`) and found identical. It was not regenerated and the Dart
+FFI bindings did not change. Cross-check available in-repo: this build's
+`yrs.dll` exports all 206 `y*` functions the header declares, matching the
+previously-shipped prebuilt DLL symbol-for-symbol.
