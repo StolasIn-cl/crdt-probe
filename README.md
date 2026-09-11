@@ -1,4 +1,4 @@
-# yjs_probe
+# crdt_probe
 
 一個獨立的 Flutter (Windows desktop) 實驗專案，用來探測 **Yjs**（JS 端 CRDT 實作）與
 **Yrs**（Rust 端、經 `yffi` 提供 C ABI 的同款 CRDT 實作）在真實 Runtime 下的行為細節，
