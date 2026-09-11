@@ -1,0 +1,7 @@
+# native/yrs-src is a vendored (checked-in) snapshot of upstream y-crdt plus
+# cargo's own vendor/ cache. cargo records a SHA-256 of every vendored
+# file's exact bytes in each crate's .cargo-checksum.json; if git rewrites
+# line endings on checkout (this repo has core.autocrlf=true), that
+# checksum stops matching and `cargo build --offline` fails to resolve the
+# vendored crate. Keep every byte under native/yrs-src exactly as vendored.
+native/yrs-src/** -text
